@@ -39,6 +39,7 @@
 class govuk::deploy::config(
   $asset_root,
   $errbit_environment_name = '',
+  $errbit_sentry_release = ENV['TAG'],
   $govuk_env = 'production',
   $website_root,
   $app_domain,
@@ -121,6 +122,7 @@ class govuk::deploy::config(
 
     'ERRBIT_ENVIRONMENT_NAME': value   => $errbit_environment_name;
     'SENTRY_CURRENT_ENV': value        => $errbit_environment_name;
+    'SENTRY_RELEASE': value            => $errbit_sentry_release;
     'GOVUK_ASSET_ROOT': value          => $asset_root;
     'GOVUK_WEBSITE_ROOT': value        => $website_root;
     'GOVUK_CSP_REPORT_ONLY': value     => $csp_report_only_value;
