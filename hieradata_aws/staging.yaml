@@ -522,5 +522,3 @@ router::nginx::robotstxt: |
   Disallow: /
 
 nginx::config::stack_network_prefix: '10.12.0'
-
-unattended_reboot::cron_hour: "*"
