@@ -279,5 +279,10 @@ class govuk::apps::ckan (
         configset => $solr_core_configset,
       }
     }
+
+    concat::fragment { "ckan_redir_lb_healthcheck":
+      target  => '/etc/nginx/lb_healthchecks.conf',
+      content => "location /_healthcheck {\n  proxy_pass ${ckan_site_url}/healthcheck;\n}\n",
+    }
   }
 }
