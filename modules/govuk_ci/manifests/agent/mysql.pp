@@ -5,6 +5,9 @@
 class govuk_ci::agent::mysql {
   contain ::govuk_mysql::server
 
+  include ::govuk_docker
+  include ::govuk_containers::ci_mysql_8
+
   # We want to run MySQL on a ramdisk, so this creates the directory so that it
   # can be mounted.
   file { '/var/lib/mysql':

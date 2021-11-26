@@ -1,6 +1,8 @@
 ---
 govuk_containers::elasticsearch::primary::enable: false
 govuk_containers::elasticsearch::secondary::enable: false
+govuk_containers::ci_postgresql_13::enable: false
+govuk_containers::ci_mysql_8::enable: false
 
 govuk_sudo::sudo_conf:
   deploy_docker_image:

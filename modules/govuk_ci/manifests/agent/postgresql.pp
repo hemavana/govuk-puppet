@@ -20,6 +20,9 @@ class govuk_ci::agent::postgresql (
   include ::postgresql::server::postgis # Required to load the PostGIS extension for mapit
   include ::postgresql::lib::devel
 
+  include ::govuk_docker
+  include ::govuk_containers::ci_postgresql_13
+
   validate_slength($mapit_role_password, 20, 3)
   validate_slength($email_alert_api_role_password, 20, 3)
 
