@@ -73,6 +73,7 @@ define govuk_postgresql::db (
     $ssl_only                = false,
     $rds                     = false,
     $rds_root_user           = 'aws_db_admin',
+    $connect_settings        = undef,
 ) {
 
     if ($database == undef) {
@@ -105,10 +106,11 @@ define govuk_postgresql::db (
     if $rds {
       if ! defined(Govuk_postgresql::Rds_sql[$user]) {
         @govuk_postgresql::rds_sql { $user:
-          rds_root_user => $rds_root_user,
-          tag           => 'govuk_postgresql::server::not_slave',
-          before        => Postgresql::Server::Db[$db_name],
-          require       => Postgresql::Server::Role[$user],
+          rds_root_user    => $rds_root_user,
+          connect_settings => $connect_settings,
+          tag              => 'govuk_postgresql::server::not_slave',
+          before           => Postgresql::Server::Db[$db_name],
+          require          => Postgresql::Server::Role[$user],
         }
       }
     }
@@ -120,11 +122,12 @@ define govuk_postgresql::db (
     }
 
     @postgresql::server::db {$db_name:
-        encoding => $encoding,
-        owner    => $db_owner,
-        password => $password_hash,
-        user     => $user,
-        tag      => 'govuk_postgresql::server::not_slave',
+        encoding         => $encoding,
+        owner            => $db_owner,
+        password         => $password_hash,
+        user             => $user,
+        connect_settings => $connect_settings,
+        tag              => 'govuk_postgresql::server::not_slave',
     }
 
     validate_array($extensions)
@@ -153,7 +156,7 @@ define govuk_postgresql::db (
     }
   } else {
     if (!empty($extensions)) {
-      # this only checks the first extension which is sufficient for 
+      # this only checks the first extension which is sufficient for
       # ckan_pycsw_production as its only got 1 extension
       if ! defined(Postgresql::Server::Extension[$extensions[0]]) {
         postgresql::server::extension { $extensions:
