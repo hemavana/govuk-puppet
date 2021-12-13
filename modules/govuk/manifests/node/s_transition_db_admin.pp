@@ -4,22 +4,7 @@
 #
 # === Parameters
 #
-class govuk::node::s_transition_db_admin(
-  $postgres_host        = undef,
-  $postgres_user        = undef,
-  $postgres_password    = undef,
-  $postgres_port        = '5432',
-  $apt_mirror_hostname,
-) {
-  # include the common config required for our app-specific DB admin class
-  class { '::govuk::nodes::s_postgresql_db_admin_base':
-    postgres_host       => $postgres_host,
-    postgres_user       => $postgres_user,
-    postgres_password   => $postgres_password,
-    postgres_port       => $postgres_port,
-    apt_mirror_hostname => $apt_mirror_hostname,
-  } ->
-
+class govuk::node::s_transition_db_admin inherits govuk::node::s_postgresql_db_admin_base {
   # include all PostgreSQL classes that create databases and users
   class { '::govuk::apps::transition::postgresql_db': } ->
 

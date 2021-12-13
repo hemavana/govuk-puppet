@@ -22,7 +22,7 @@
 #   The port with which to connect to the `postgres_host`.
 #   Default: '5432'
 #
-class govuk::nodes::s_postgresql_db_admin_base(
+class govuk::node::s_postgresql_db_admin_base(
   $postgres_host        = undef,
   $postgres_user        = undef,
   $postgres_password    = undef,
