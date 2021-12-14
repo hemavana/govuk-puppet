@@ -6,6 +6,7 @@ MIRROR_ROOT="<%= @mirror_root -%>"
 GOVUK_APP_DOMAIN=$(cat /etc/govuk/env.d/GOVUK_APP_DOMAIN)
 STATIC_HOSTNAME="static.${GOVUK_APP_DOMAIN}"
 PROGRAM_NAME=$(basename $0)
+AWS_ENVIRONMENT=$(cut -d'=' -f2 < /etc/facter/facts.d/aws_environment.txt)
 
 # Nagios defaults, assume failed
 NAGIOS_CODE=1
@@ -55,7 +56,7 @@ for TARGET in ${TARGETS}; do
   if [[ $TARGET = s3://* ]]; then
     # With s3cmd sync, target needs to end with /
     if [[ ! $(echo ${TARGET} | egrep '/$') ]] ; then TARGET="${TARGET}/" ; fi
-    CMD="/usr/local/bin/govuk_setenv s3_sync_mirror s3cmd sync --no-mime-magic --guess-mime-type --no-preserve --cache-file=/tmp/s3cmd_mirror_sync.cache --exclude=\"lost+found\" ${MIRROR_ROOT}/ ${TARGET}"
+    CMD="/usr/local/bin/govuk_setenv s3_sync_mirror s3cmd sync --no-mime-magic --guess-mime-type --no-preserve --cache-file=/tmp/s3cmd_mirror_sync.cache --exclude=\"lost+found\" ${MIRROR_ROOT}/ ${TARGET} && /usr/local/bin/govuk_setenv s3_sync_mirror s3cmd sync --force --no-mime-magic --mime-type text/html --cache-file=/tmp/s3cmd_mirror_sync.cache ${MIRROR_ROOT}/www.${AWS_ENVIRONMENT}.publishing.service.gov.uk/index.html ${TARGET}www.${AWS_ENVIRONMENT}.publishing.service.gov.uk/"
   else
     CMD="rsync -az --exclude 'lost+found' ${MIRROR_ROOT}/. ${TARGET}:/srv/mirror_data"
   fi
