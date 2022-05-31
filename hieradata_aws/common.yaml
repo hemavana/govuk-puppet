@@ -904,6 +904,7 @@ govuk::node::s_mysql_master::encryption_key: "%{hiera('govuk::node::s_mysql_back
 
 govuk::node::s_transition_db_admin::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 govuk::node::s_whitehall_backend::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
+govuk::node::s_base::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 
 govuk_bundler::config::service: 'http://gemstash'
 
