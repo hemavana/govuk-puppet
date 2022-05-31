@@ -55,6 +55,7 @@ govuk::node::s_transition_db_admin::apt_mirror_hostname: "%{hiera('apt_mirror_ho
 govuk::node::s_whitehall_backend::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"  
 govuk::node::s_cache_db_admin::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 govuk::node::s_base::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
+govuk_awscloudwatch::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 
 govuk_mount::no_op: false
 
