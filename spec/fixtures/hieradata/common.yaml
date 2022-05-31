@@ -52,7 +52,9 @@ govuk::node::s_graphite::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 govuk::node::s_graphite::apt_mirror_gpg_key_fingerprint: "%{hiera('apt_mirror_fingerprint')}"
 govuk::node::s_logging::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 govuk::node::s_transition_db_admin::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
-govuk::node::s_whitehall_backend::apt_mirror_hostname: 'apt.publishing.service.gov.uk'
+govuk::node::s_whitehall_backend::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"  
+govuk::node::s_cache_db_admin::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
+govuk::node::s_base::apt_mirror_hostname: "%{hiera('apt_mirror_hostname')}"
 
 govuk_mount::no_op: false
 
