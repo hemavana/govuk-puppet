@@ -2,7 +2,7 @@
 
 REPOSITORY = 'govuk-puppet'
 
-library("govuk")
+library("govuk@bundle-deprecations-again")
 
 node {
   properties([
