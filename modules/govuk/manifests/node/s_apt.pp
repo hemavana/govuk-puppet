@@ -36,7 +36,7 @@ class govuk::node::s_apt (
     group       => 'root',
     path        => $root_dir,
     refreshonly => true,
-    onlyif      => $bootstrap_packages,
+    onlyif      => defined($bootstrap_packages),
   }
 
   Govuk_mount[$root_dir] -> Exec['install_boostrap_packages'] -> Class['aptly']
