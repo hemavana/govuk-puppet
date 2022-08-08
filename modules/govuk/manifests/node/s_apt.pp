@@ -31,10 +31,10 @@ class govuk::node::s_apt (
   }
 
   exec { 'install_boostrap_packages':
-    command  => "dpkg -i ${bootstrap_packages}.join()",
-    user     => 'root',
-    group    => 'root',
-    path     => $root_dir,
+    command => "dpkg -i ${bootstrap_packages}.join()",
+    user    => 'root',
+    group   => 'root',
+    path    => $root_dir,
   }
 
   Govuk_mount[$root_dir] -> Exec['install_boostrap_packages'] -> Class['aptly']
