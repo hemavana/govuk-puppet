@@ -31,7 +31,7 @@ class govuk::node::s_apt (
   }
 
   exec { 'install_boostrap_packages':
-    command => "/usr/bin/dpkg -i ${bootstrap_packages}.join()",
+    command => "/usr/bin/dpkg -i ${bootstrap_packages}.join(" ")",
     user    => 'root',
     group   => 'root',
     path    => $root_dir,
