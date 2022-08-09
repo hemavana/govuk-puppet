@@ -31,7 +31,7 @@ class govuk::node::s_apt (
   }
   $pkgs = join($bootstrap_packages, ' ')
   exec { 'install_boostrap_packages':
-    command => "/usr/bin/dpkg -i ${pkgs}",
+    command => "/bin/echo ${pkgs}",
     user    => 'root',
     group   => 'root',
     path    => $root_dir,
