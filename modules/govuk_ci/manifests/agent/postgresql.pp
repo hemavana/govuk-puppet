@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*imminence_role_password*]
+#  The password for the imminence role.
+#
 # [*mapit_role_password*]
 #  The password for the mapit role.
 #
@@ -11,6 +14,7 @@
 #  The password for the email-alert-api role.
 #
 class govuk_ci::agent::postgresql (
+  $imminence_role_password = 'imminence',
   $mapit_role_password = 'mapit',
   $email_alert_api_role_password = 'email-alert-api',
 ) {
@@ -34,6 +38,12 @@ class govuk_ci::agent::postgresql (
   postgresql::server::role { 'jenkins':
     password_hash => postgresql_password('jenkins', 'jenkins'),
     createdb      => true,
+  }
+
+  # The imminence role needs to be a superuser in order to load the PostGIS extension for the test database.
+  postgresql::server::role { 'imminence':
+    superuser     => true,
+    password_hash => postgresql_password('imminence', $imminence_role_password);
   }
 
   # The mapit role needs to be a superuser in order to load the PostGIS extension for the test database.
