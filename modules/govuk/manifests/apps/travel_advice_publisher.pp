@@ -117,6 +117,14 @@ class govuk::apps::travel_advice_publisher(
     }
   }
 
+  @filebeat::prospector { 'travel-advice-publisher-procfile-worker-err':
+    ensure => $ensure,
+    paths  => ["/var/log/${app_name}/procfile_worker.err.log"],
+    tags   => ['stderr', 'sidekiq', 'experimental'],
+    json   => true,
+    fields => {'application' => $app_name},
+  }
+
   validate_bool($enable_procfile_worker)
   govuk::procfile::worker { $app_name:
     ensure         => $ensure,
