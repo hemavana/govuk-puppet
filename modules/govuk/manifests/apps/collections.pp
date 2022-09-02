@@ -62,14 +62,6 @@ class govuk::apps::collections(
     app => 'collections',
   }
 
-  if $unreleased_features_enabled {
-    govuk::app::envvar {
-      "${title}-UNRELEASED_FEATURES":
-        varname => 'UNRELEASED_FEATURES',
-        value   => '1';
-    }
-  }
-
   govuk::app::envvar {
     "${title}-EMAIL_ALERT_API_BEARER_TOKEN":
         varname => 'EMAIL_ALERT_API_BEARER_TOKEN',
