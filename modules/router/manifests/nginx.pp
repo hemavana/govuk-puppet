@@ -76,9 +76,9 @@ class router::nginx (
   $check_requests_warning = '@25',
   $check_requests_critical = '@10',
   $robotstxt = '',
-  $proxy_busy_buffers_size = '8k',
-  $proxy_buffers = '8 4k',
-  $proxy_buffer_size = '4k',
+  $proxy_busy_buffers_size = '16k',
+  $proxy_buffers = '8 8k',
+  $proxy_buffer_size = '8k',
 ) {
   validate_array($rate_limit_tokens)
 
