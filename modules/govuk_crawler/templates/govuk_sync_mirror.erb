@@ -11,6 +11,7 @@ PROGRAM_NAME=$(basename $0)
 WEBSITE_MIRROR_DIR="${MIRROR_ROOT}/${GOVUK_WEBSITE_DIR}"
 
 S5CMD_URL="https://github.com/peak/s5cmd/releases/download/v2.0.0/s5cmd_2.0.0_Linux-64bit.tar.gz"
+S5CMD=/usr/local/bin/s5cmd
 
 # Nagios defaults, assume failed
 NAGIOS_CODE=1
@@ -33,7 +34,7 @@ function install_s5cmd() {
   (
     cd "$tmpdir"
     curl -fsL "${S5CMD_URL}" | tar -zxf - s5cmd
-    sudo cp s5cmd /usr/local/bin
+    sudo cp s5cmd "${S5CMD}"
   )
 }
 
@@ -67,7 +68,7 @@ EOF
   sudo mv timestamps.txt "${WEBSITE_MIRROR_DIR}"
 }
 
-[[ -x /usr/local/bin/s5cmd ]] || install_s5cmd
+[[ -x "${S5CMD}" ]] || install_s5cmd
 log "user.info" "Starting to synchronise GOV.UK to mirror: <%= @targets.flatten.join(' ') -%>"
 get_error_page
 write_timestamps
@@ -77,7 +78,8 @@ function do_sync() {
   # With s3cmd/s5cmd sync, the target needs to end with /
   [[ ${TARGET} == */ ]] || TARGET="${TARGET}/"
 
-  /usr/local/bin/govuk_setenv s3_sync_mirror s5cmd sync \
+  /usr/local/bin/govuk_setenv s3_sync_mirror "${S5CMD}" --log error sync \
+      --destination-region eu-west-2 \
       --exclude lost+found "${MIRROR_ROOT}/" "${TARGET}"
 }
 
