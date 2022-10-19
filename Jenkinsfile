@@ -36,6 +36,10 @@ node {
       }
     }
 
+    stage('Hiera YAML files lint check') {
+      sh("yamllint -d '{rules: {line-length: {max: 1000}}}' hieradata_aws/*.yaml")
+    }
+
     stage("Lint check") {
       govuk.runRakeTask('lint')
     }
