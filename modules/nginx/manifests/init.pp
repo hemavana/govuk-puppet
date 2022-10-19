@@ -9,6 +9,24 @@
 # [*denied_ip_addresses*]
 #   Passed through to `nginx::config`, see the documentation there.
 #
+# [*proxy_busy_buffers_size*]
+#
+#  limits the total size of buffers that can be busy sending a response to the client while the response is not yet fully read
+#
+# Default: '8k'
+#
+# [*proxy_buffers*]
+#
+#  Sets the number and size of the buffers used for reading a response from the proxied server, for a single connection
+#
+# Default: '8 4k'
+#
+# [*proxy_buffer_size*]
+#
+#  Sets the size of the buffer used for reading the first part of the response received from the proxied server
+#
+# Default: '4k'
+#
 class nginx (
   $server_names_hash_max_size = 512,
   $variables_hash_max_size = 1024,
@@ -30,6 +48,9 @@ class nginx (
     server_names_hash_max_size => $server_names_hash_max_size,
     variables_hash_max_size    => $variables_hash_max_size,
     denied_ip_addresses        => $denied_ip_addresses,
+    proxy_busy_buffers_size   => '16k',
+    proxy_buffers             => '8 8k',
+    proxy_buffer_size         => '8k',
   }
 
   Class['nginx::package'] -> Class['nginx::config']
